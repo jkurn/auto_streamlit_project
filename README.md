@@ -60,6 +60,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Jonathan Kurn - [@jonakurn](https://twitter.com/jonakurn) - jonathan@cepat.ai
+Jonathan Kurniawan - [@jonakurn](https://twitter.com/jonakurn) - jonathan@cepat.ai
 
 Project Link: [https://github.com/jkurn/auto_streamlit_project](https://github.com/jkurn/auto_streamlit_project)

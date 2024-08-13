@@ -1,14 +1,31 @@
 import streamlit as st
 import os
+from dotenv import load_dotenv
 from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
+from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.callbacks.base import BaseCallbackHandler
 
-# Set up the OpenAI API key
-os.environ["OPENAI_API_KEY"] = "your-api-key-here"
+# Load environment variables from .env file
+load_dotenv()
+
+class StreamHandler(BaseCallbackHandler):
+    def __init__(self, container, initial_text=""):
+        self.container = container
+        self.text = initial_text
+
+    def on_llm_new_token(self, token: str, **kwargs) -> None:
+        self.text += token
+        self.container.markdown(self.text)
 
 # Initialize the OpenAI language model
-llm = OpenAI(temperature=0.7)
+llm = ChatOpenAI(
+    model_name="gpt-4o",
+    temperature=0.7,
+    max_tokens=4096,  # Maximum for GPT-4
+    streaming=True
+)
 
 # Define the project generation prompt
 project_prompt = PromptTemplate(
@@ -42,16 +59,21 @@ key_features = st.text_area("Key Features")
 
 if st.button("Generate Project"):
     if ai_product and ai_tech_lang_frame and key_features:
-        with st.spinner("Generating project details..."):
-            response = project_chain.run({
+        st.subheader("Generated Project Details")
+        output_container = st.empty()
+        stream_handler = StreamHandler(output_container)
+        
+        # Create LangChain with streaming
+        project_chain = LLMChain(llm=llm, prompt=project_prompt)
+        
+        response = project_chain.run(
+            {
                 "AI_PRODUCT": ai_product,
                 "AI_TECH_LANG_FRAME": ai_tech_lang_frame,
                 "KEY_FEATURES": key_features
-            })
-        
-        # Display the generated project details
-        st.subheader("Generated Project Details")
-        st.text_area("Project Outline", response, height=500)
+            },
+            callbacks=[stream_handler]
+        )
         
         # Extract and display the bash script
         bash_script_start = response.find("```bash")

@@ -40,7 +40,7 @@ Auto Streamlit Project is a powerful tool that generates comprehensive AI projec
 
 1. Run the Streamlit app:
    ```
-   streamlit run app.py
+   streamlit run home.py
    ```
 2. Open your web browser and go to the local URL provided by Streamlit (usually http://localhost:8501)
 3. Fill in the required fields:

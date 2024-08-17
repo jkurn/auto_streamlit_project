@@ -10,6 +10,16 @@ from langchain.callbacks.base import BaseCallbackHandler
 # Load environment variables from .env file
 load_dotenv()
 
+# Add explanation at the top of the app
+st.write("""
+This AI Project Generator helps you create a comprehensive project outline and implementation details for your AI product. 
+To use it:
+1. Enter your AI Product name
+2. Specify the AI Technology, Language, or Framework you want to use
+3. List the Key Features of your project
+4. Click 'Generate Project' to get detailed project information, including folder structure, implementation plan, and sample code.
+""")
+
 class StreamHandler(BaseCallbackHandler):
     def __init__(self, container, initial_text=""):
         self.container = container
@@ -21,9 +31,9 @@ class StreamHandler(BaseCallbackHandler):
 
 # Initialize the OpenAI language model
 llm = ChatOpenAI(
-    model_name="gpt-4o",
+    model_name="gpt-4o-mini",
     temperature=0.7,
-    max_tokens=4096,  # Maximum for GPT-4
+    max_tokens=16384,
     streaming=True
 )
 

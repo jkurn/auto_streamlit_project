@@ -3,3 +3,6 @@ pandas==1.4.3
 python-dotenv==0.19.0
 langchain-community==0.0.10
 langchain-openai==0.0.2
+python-docx==0.29.0
+openai
+requests==2.31.0

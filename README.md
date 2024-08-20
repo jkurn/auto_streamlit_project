@@ -31,9 +31,9 @@ Auto Streamlit Project is a powerful tool that generates comprehensive AI projec
    ```
    pip install -r requirements.txt
    ```
-4. Set up your OpenAI API key as an environment variable:
+4. Create a `.env` file in the project root and add your OpenAI API key:
    ```
-   export OPENAI_API_KEY='your-api-key-here'
+   echo "OPENAI_API_KEY=your-api-key-here" > .env
    ```
 
 ## Usage
